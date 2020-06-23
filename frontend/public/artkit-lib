@@ -1,0 +1,374 @@
+###./color.py##!
+from dataclasses import dataclass
+
+from artkit.numbers import Node
+
+
+def serialize_value(value):
+    if isinstance(value, Node):
+        return value()
+    else:
+        return value
+
+
+@dataclass
+class Color:
+    @classmethod
+    def hsla(cls, hue, sat, lum, alpha):
+        return HSLA(hue, sat, lum, alpha)
+
+    @classmethod
+    def rgba(cls, red, green, blue, alpha):
+        return RGBA(red, green, blue, alpha)
+
+    def serialize(self):
+        pass
+
+
+@dataclass
+class HSLA(Color):
+    hue: int
+    sat: int
+    lum: int
+    alpha: int
+
+    def serialize(self):
+        return f"hsla({serialize_value(self.hue)}, {serialize_value(self.sat)}%, {serialize_value(self.lum)}%, {serialize_value(self.alpha)})"
+
+@dataclass
+class RGBA(Color):
+    red: int
+    green: int
+    blue: int
+    alpha: int
+
+    def serialize(self):
+        return f"hsla({serialize_value(self.red)}, {serialize_value(self.green)}, {serialize_value(self.blue)}, {serialize_value(self.alpha)})"
+###./__init__.py##!
+from artkit.shapes import *
+from artkit.numbers import *
+from artkit.color import Color
+###./numbers/__init__.py##!
+from artkit.numbers.node import *
+from artkit.numbers.distributions import *
+from artkit.numbers.operators import *###./numbers/distributions.py##!
+import random
+from dataclasses import dataclass
+
+
+from artkit.numbers.node import Node
+
+
+class Distribution(Node):
+    pass
+
+
+@dataclass
+class NormalFloat(Distribution):
+    def __init__(self, mean, st_dev):
+        self.mean = mean
+        self.st_dev = st_dev
+        self()
+
+    def _op(self, *args, **kwargs):
+        return random.gauss(self.mean, self.st_dev)
+
+    def __repr__(self):
+        return f"NormalFloat(mean={self.mean}, st_dev={self.st_dev})"
+
+
+@dataclass
+class UniformFloat(Distribution):
+    def __init__(self, low, high):
+        self.low = low
+        self.high = high
+        self()
+
+    def _op(self, *args, **kwargs):
+        return random.uniform(self.low, self.high)
+
+    def __repr__(self):
+        return f"UniformFloat(low={self.low}, high={self.high})"
+
+
+
+
+@dataclass
+class NormalInt(Distribution):
+    def __init__(self, mean, st_dev):
+        self.mean = mean
+        self.st_dev = st_dev
+        self()
+
+    def _op(self, *args, **kwargs):
+        return int(random.gauss(self.mean, self.st_dev))
+
+    def __repr__(self):
+        return f"NormalInt(mean={self.mean}, st_dev={self.st_dev})"
+
+
+@dataclass
+class UniformInt(Distribution):
+    def __init__(self, low, high):
+        self.low = low
+        self.high = high
+        self()
+
+    def _op(self, *args, **kwargs):
+        return int(random.uniform(self.low, self.high))
+
+    def __repr__(self):
+        return f"UniformInt(low={self.low}, high={self.high})"
+
+__all__ = ["UniformFloat", "UniformInt", "NormalFloat", "NormalInt"]###./numbers/node.py##!
+
+class Node:
+    def _op(self, *args, **kwargs):
+        pass
+
+    def __call__(self, *args, **kwargs):
+        if not hasattr(self, "_value"):
+            self._value = self._op(*args, **kwargs)
+
+        return self._value
+
+    def __add__(self, other):
+        from artkit.numbers.operators import Addition
+        if isinstance(other, Node):
+            return Addition(self, other)
+        elif isinstance(other, float) or isinstance(other, int):
+            return Addition(self, Scalar(other))
+
+    def __sub__(self, other):
+        from artkit.numbers.operators import Subtraction
+        if isinstance(other, Node):
+            return Subtraction(self, other)
+        elif isinstance(other, float) or isinstance(other, int):
+            return Subtraction(self, Scalar(other))
+
+    def __mul__(self, other):
+        from artkit.numbers.operators import Multiplication
+        if isinstance(other, Node):
+            return Multiplication(self, other)
+        elif isinstance(other, float) or isinstance(other, int):
+            return Multiplication(self, Scalar(other))
+
+    def __truediv__(self, other):
+        from artkit.numbers.operators import Division
+        if isinstance(other, Node):
+            return Division(self, other)
+        elif isinstance(other, float) or isinstance(other, int):
+            return Division(self, Scalar(other))
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    def __rsub__(self, other):
+        from artkit.numbers.operators import Subtraction
+        if isinstance(other, Node):
+            return Subtraction(other, self)
+        elif isinstance(other, float) or isinstance(other, int):
+            return Subtraction(Scalar(other), self)
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+    def __rdiv__(self, other):
+        from artkit.numbers.operators import Division
+        if isinstance(other, Node):
+            return Division(other, self)
+        elif isinstance(other, float) or isinstance(other, int):
+            return Division(Scalar(other), self)
+
+
+class Scalar(Node):
+    def __init__(self, value):
+        self._value = value
+
+    def _op(self, *args, **kwargs):
+        return self._value
+
+    def __repr__(self):
+        return repr(self._value)
+###./numbers/operators.py##!from artkit.numbers.node import Node
+
+
+class BiOperator(Node):
+    pass
+
+
+class Addition(Node):
+    def __init__(self, a: Node, b: Node):
+        self._a = a
+        self._b = b
+
+    def __call__(self, *args, **kwargs):
+        return self._a() + self._b()
+
+    def __repr__(self):
+        return f"({repr(self._a)} + {repr(self._b)})"
+
+
+class Subtraction(Node):
+    def __init__(self, a: Node, b: Node):
+        self._a = a
+        self._b = b
+
+    def __call__(self, *args, **kwargs):
+        return self._a() - self._b()
+
+    def __repr__(self):
+        return f"({repr(self._a)} - {repr(self._b)})"
+
+
+class Multiplication(Node):
+    def __init__(self, a: Node, b: Node):
+        self._a = a
+        self._b = b
+
+    def __call__(self, *args, **kwargs):
+        return self._a() * self._b()
+
+    def __repr__(self):
+        return f"({repr(self._a)} * {repr(self._b)})"
+
+
+class Division(Node):
+    def __init__(self, a: Node, b: Node):
+        self._a = a
+        self._b = b
+
+    def __call__(self, *args, **kwargs):
+        return self._a() / self._b()
+
+    def __repr__(self):
+        return f"({repr(self._a)} / {repr(self._b)})"
+###./shapes/__init__.py##!
+from artkit.shapes.shape import *###./shapes/shape.py##!import copy
+
+from dataclasses import dataclass
+from typing import Optional, List
+
+__all__ = ["Rect", "Square", "Ellipse", "Circle", "Polygon", "Line", "Group"]
+
+class Shape:
+    def copy(self):
+        return copy.deepcopy(self)
+
+    def add(self, item: "Shape"):
+
+        if not hasattr(self, "items"):
+            self.items = []
+
+        return self.items.append(item)
+
+    def rough(self):
+
+        if not hasattr(self, "qualifiers"):
+            self.qualifiers = []
+
+        return self.qualifiers.append("rough")
+
+    def blurry(self):
+
+        if not hasattr(self, "qualifiers"):
+            self.qualifiers = []
+
+        return self.qualifiers.append("blurry")
+
+
+    def swiggly(self):
+
+        if not hasattr(self, "qualifiers"):
+            self.qualifiers = []
+
+        return self.qualifiers.append("swiggly")
+
+@dataclass
+class Polygon(Shape):
+    cx: float
+    cy: float
+    r: float
+    sides: int
+    stroke: Optional[str] = None
+    fill: Optional[str] = None
+    items: Optional[List[Shape]] = None
+
+
+@dataclass
+class Rect(Shape):
+    """A rectangle"""
+    x: float
+    y: float
+    width: float
+    height: float
+    stroke: Optional[str] = None
+    fill: Optional[str] = None
+    items: Optional[List[Shape]] = None
+
+
+@dataclass
+class Ellipse(Shape):
+    cx: float
+    cy: float
+    rx: float
+    ry: float
+    stroke: Optional[str] = None
+    fill: Optional[str] = None
+    items: Optional[List[Shape]] = None
+
+
+@dataclass
+class Square(Shape):
+    x: float
+    y: float
+    side: float
+    stroke: Optional[str] = None
+    fill: Optional[str] = None
+    items: Optional[List[Shape]] = None
+
+
+@dataclass
+class Circle(Shape):
+    cx: float
+    cy: float
+    r: float
+    stroke: Optional[str] = None
+    fill: Optional[str] = None
+    items: Optional[List[Shape]] = None
+
+
+@dataclass
+class Line(Shape):
+    x0: float
+    y0: float
+    x1: float
+    y1: float
+    stroke: Optional[str] = None
+    items: Optional[List[Shape]] = None
+
+
+@dataclass
+class Group(Shape):
+    x: float
+    y: float
+    width: float
+    height: float
+    items: Optional[List[Shape]] = None
+###./examples/drawing_1.py##!
+from artkit import *
+
+
+def drawing():
+
+    size = NormalFloat(10, 3)
+
+    rect = Rect(size, size, 20, 20)
+    print(rect)
+
+    re 333
+
+
+drawing()
+
+###./examples/__init__.py##!
