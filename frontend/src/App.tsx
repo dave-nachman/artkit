@@ -13,7 +13,7 @@ import {
   Input,
   Label,
   Loader,
-  Menu
+  Menu,
 } from "semantic-ui-react";
 import { useDebounce } from "use-debounce";
 import useUndo from "use-undo";
@@ -42,7 +42,7 @@ enum Tab {
   Playground = "Playground",
   Guide = "Guide",
   Reference = "Reference",
-  Motivation = "Motivation and design"
+  Motivation = "Motivation and design",
 }
 
 const App = () => {
@@ -98,7 +98,7 @@ const App = () => {
             valueKey,
             JSON.stringify({
               source: value,
-              compiled
+              compiled,
             })
           );
         } catch (e) {}
@@ -118,7 +118,7 @@ const App = () => {
       localStorage.setItem(
         valueKey,
         JSON.stringify({
-          source: value
+          source: value,
         })
       );
 
@@ -187,14 +187,14 @@ const App = () => {
         style={{
           backgroundColor: "#a5e2da",
           borderRadius: 0,
-          marginTop: 0
+          marginTop: 0,
         }}
       >
         <Menu.Item
           as="a"
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            color: "rgba(0, 0, 0, 0.5)"
+            color: "rgba(0, 0, 0, 0.5)",
           }}
         >
           <Input
@@ -207,7 +207,7 @@ const App = () => {
           as="a"
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            color: "rgba(0, 0, 0, 0.5)"
+            color: "rgba(0, 0, 0, 0.5)",
           }}
         >
           <Dropdown text="examples">
@@ -223,7 +223,7 @@ const App = () => {
           onClick={downloadCode}
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            color: "rgba(0, 0, 0, 0.5)"
+            color: "rgba(0, 0, 0, 0.5)",
           }}
         >
           <Icon style={{ marginRight: 4 }} name="download" />
@@ -234,7 +234,7 @@ const App = () => {
           onClick={downloadImage}
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            color: "rgba(0, 0, 0, 0.5)"
+            color: "rgba(0, 0, 0, 0.5)",
           }}
         >
           <Icon style={{ marginRight: 4 }} name="download" />
@@ -246,7 +246,7 @@ const App = () => {
           onClick={undo}
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            color: "rgba(0, 0, 0, 0.5)"
+            color: "rgba(0, 0, 0, 0.5)",
           }}
         >
           <Icon name="undo" />
@@ -257,7 +257,7 @@ const App = () => {
           onClick={redo}
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            color: "rgba(0, 0, 0, 0.5)"
+            color: "rgba(0, 0, 0, 0.5)",
           }}
         >
           <Icon name="redo" />
@@ -267,7 +267,7 @@ const App = () => {
           as="a"
           style={{
             fontFamily: "'Roboto Mono', monospace",
-            color: "rgba(0, 0, 0, 0.5)"
+            color: "rgba(0, 0, 0, 0.5)",
           }}
         >
           seed
@@ -276,12 +276,12 @@ const App = () => {
               marginLeft: 8,
               background: "none",
               opacity: 0.5,
-              width: 64
+              width: 64,
             }}
             placeholder="seed"
             value={seed}
             type="number"
-            onChange={e => setSeed(Number(e.currentTarget.value))}
+            onChange={(e) => setSeed(Number(e.currentTarget.value))}
           />
           <Icon
             style={{ marginLeft: 8 }}
@@ -306,7 +306,7 @@ const App = () => {
             <GridColumn>
               <div
                 style={{
-                  position: "absolute"
+                  position: "absolute",
                 }}
               >
                 {error && (
@@ -329,7 +329,7 @@ const App = () => {
                 <canvas
                   style={{
                     border: "1px solid #ccc",
-                    opacity: error ? 0.25 : 1
+                    opacity: error ? 0.25 : 1,
                   }}
                   height={canvasSize}
                   width={canvasSize}
@@ -350,7 +350,7 @@ const App = () => {
           style={{
             backgroundColor: "#a5e2da",
             borderRadius: 0,
-            marginBottom: 0
+            marginBottom: 0,
           }}
         >
           <Menu.Item
@@ -361,7 +361,7 @@ const App = () => {
               fontSize: 36,
               color: "rgba(0, 0, 0, 0.5)",
               padding: "18px 36px",
-              letterSpacing: 1
+              letterSpacing: 1,
             }}
           >
             ArtKit
@@ -378,7 +378,7 @@ const App = () => {
             backgroundColor: "#a5e2da",
             borderRadius: 0,
             marginBottom: 0,
-            marginTop: 0
+            marginTop: 0,
           }}
         >
           {Object.values(Tab).map((tabValue, index) => (
@@ -388,7 +388,7 @@ const App = () => {
                 flex: 1,
                 fontFamily: "'Roboto Mono', monospace",
                 color: "rgba(0,) 0, 0, 0.5)",
-                paddingLeft: index === 0 ? 40 : 16 // align with Artkit logo
+                paddingLeft: index === 0 ? 40 : 16, // align with Artkit logo
               }}
               active={tab === tabValue}
               onClick={() => setTab(tabValue)}
@@ -396,6 +396,18 @@ const App = () => {
               {tabValue.toLowerCase()}
             </Menu.Item>
           ))}
+          <a href="https://github.com/dave-nachman/artkit" target="_blank">
+            <Menu.Item
+              style={{
+                flex: 1,
+                fontFamily: "'Roboto Mono', monospace",
+                color: "rgba(0,) 0, 0, 0.5)",
+                paddingRight: 32,
+              }}
+            >
+              github
+            </Menu.Item>
+          </a>
         </Menu>
         {tab === Tab.Guide ? (
           <Guide />

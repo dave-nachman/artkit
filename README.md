@@ -61,6 +61,7 @@ Python, then seemed like a good choice, as a language that has operator overload
   - [TODO] Improve WebAssembly loading time
   - [TODO] Finish polygon renderer implementation
   - [TODO] Improve look and feel
+  - [TODO] Add more examples
 
 ## Quick guide
 
