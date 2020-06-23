@@ -1,5 +1,7 @@
 # Artkit Frontend
 
+Interactive web environment for Artkit using WebAssembly, Pyodide, React, and TypeScript.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
