@@ -16,8 +16,8 @@ In observing the work of artists doing generative visual art, I noticed that the
 built on top of lower-level libraries and APIs. If artists are excited about building their own tools, that's great, but for some, not having accessible high-level tools might be a barrier to exploring,
 something I experienced myself.
 
-My goal is to create an accessible, useful tookit for a particular subset of generative visual art, a subset particularly focused on 2D drawings and patterns. It provides a **declarative API** that hopefully can allow an artist to express themselves at an intent-level,
-it has a good pattern for **composition and abstraction**, and it has easy-to-use capabilities around **introducing randonmess** - a key element of generative art.
+My goal — still unrealized and very much a work-in-progress — is to create an accessible, useful tookit for a particular subset of generative visual art, a subset particularly focused on 2D drawings and patterns. It provides a **declarative API** that hopefully can allow an artist to express themselves at an intent-level,
+it has a good pattern for **composition and abstraction**, and it is meant to provide easy-to-use capabilities around **introducing randonmess** - a key element of generative art.
 
 ### Design choices
 
