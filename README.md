@@ -30,7 +30,7 @@ An embedded DSL though has the advantage of being easy often to learn and use (u
 
 Processing and WebGL are example of standalone DSLs for graphics, while three.js is an example of an embedded DSL in JavaScript.
 
-For Artkit, I thought that an embedded DSL would be more accessible and easy-to-use than a stand-alone DSL.
+For Artkit, I thought that an embedded DSL would be more accessible and easy-to-use than a standalone DSL.
 
 #### **Python** vs. another programming language
 
