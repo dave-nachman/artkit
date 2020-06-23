@@ -4,6 +4,10 @@ Artkit is a toolkit for creating generative visual art, primarily focused on 2d 
 
 It provides a declarative API for drawing shapes with capabilities for introducing **controlled randonness**.
 
+## Get started
+
+Visit the interactive web environment: https://artkit.app
+
 ## Motivation
 
 In observing the work of artists doing generative visual art, I noticed that the artists typically built a lot of tooling for themselves,
@@ -53,6 +57,7 @@ Python, then seemed like a good choice, as a language that has operator overload
 ## Current status
 
 - Core library (Python)
+  - [TODO] Create good experience around directly using core library
   - [TODO] Add Python renderer
   - [TODO] Improve docs
   - [TODO] Improve color library
@@ -63,7 +68,7 @@ Python, then seemed like a good choice, as a language that has operator overload
   - [TODO] Improve look and feel
   - [TODO] Add more examples
 
-## Quick guide
+## Guide
 
 ### Basic usage
 
