@@ -58,6 +58,7 @@ Python, then seemed like a good choice, as a language that has operator overload
   - [TODO] Improve color library
 - Interactive website
   - [TODO] Make auto-complete more reliable
+  - [TODO] Improve WebAssembly loading time
   - [TODO] Finish polygon renderer implementation
   - [TODO] Improve look and feel
 
