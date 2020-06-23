@@ -1,8 +1,8 @@
 # Artkit
 
-Artkit is a WIP toolkit, with an [interactive web environment](https://artkit.app), for creating generative visual art, primarily focused on 2d graphics — implemented in Python as an embedded DSL.
+Artkit is a toolkit for creating generative visual art, primarily focused on 2d graphics — implemented in Python as an embedded DSL, along with an [interactive web environment](https://artkit.app).
 
-It provides a declarative API for drawing with capabilities for introducing _controlled randonness_.
+It provides a declarative API for drawing shapes with capabilities for introducing **controlled randonness**.
 
 ## Motivation
 
@@ -71,7 +71,7 @@ A shape is the basic building block of our drawings, and include `Rect`, `Circle
 
 Here's a basic example of drawing a red rectangle:
 
-```
+```python
 import artkit
 
 def draw():
@@ -81,7 +81,7 @@ def draw():
 
 We can add another shape to any other shape via an `add` methods or an `items` optional argument:
 
-```
+```python
 import artkit
 
 def draw():
@@ -95,7 +95,7 @@ def draw():
 
 Or form a group:
 
-```
+```python
 import artkit
 
 def draw():
@@ -115,7 +115,7 @@ Because of the ability to add shapes to each other and due to their relative pos
 Randomness can be introduced by using a number that is sampled from a distribution. Available distributions include `UniformFloat(min, max)`, `UniformInt(min, max)`,
 `NormalFloat(mean, st_dev)`, `NormalInt(mean, st_dev)`:
 
-```
+```python
 import artkit
 
 def draw():
@@ -126,7 +126,7 @@ def draw():
 
 Here is a number of random rectangles, created using a for loop and a range:
 
-```
+```python
 import artkit
 
 def draw():
@@ -142,7 +142,7 @@ def draw():
 
 A random number in Artkit implements the standard operations that a scalar number has, so you can treat it like a normal number in terms of adding and multiplying, e.g.:
 
-```
+```python
 import artkit
 
 def draw():
@@ -165,7 +165,7 @@ Standard Python language features, such as defining functions, can be used to fa
 
 In this example, a reusable compound shape, `square_with_circle` is defined as a function:
 
-```
+```python
 import artkit
 
 def square_with_circle():
@@ -198,7 +198,7 @@ def draw():
 
 Colors can be specified using any valid web color string (e.g. a named color, rgb, hsla) or an instance of `Color.hsla`:
 
-```
+```python
 
 import artkit
 
@@ -219,7 +219,7 @@ While it is not that useful on its own to have a value that increases through th
 using the modulo operator (e.g. `tick % 100`) to produce a value that ranges between 0 and n - 1. Similarly, the trigonometry
 functions from Python's math library can be used to produce a smooth value that ranges between 0 and 1 (e.g. `math.sin(tick)`).
 
-```
+```python
 import artkit
 import math
 
