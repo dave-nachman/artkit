@@ -4,6 +4,8 @@ Artkit is a toolkit for creating generative visual art, primarily focused on 2d 
 
 It provides a declarative API for drawing shapes with capabilities for introducing **controlled randonness**.
 
+Artkit was built during a mini-retreat at the [Recurse Center](https://www.recurse.com/).
+
 ## Get started
 
 Visit the interactive web environment: https://artkit.app
