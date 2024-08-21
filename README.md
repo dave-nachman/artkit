@@ -1,6 +1,6 @@
 # Artkit
 
-Artkit is a toolkit for creating generative visual art, primarily focused on 2d graphics — implemented in Python as an embedded DSL, along with an [interactive web environment](https://artkit.app).
+Artkit is a toolkit for creating generative visual art, primarily focused on 2d graphics — implemented in Python as an embedded DSL, along with an [interactive web environment](https://artkit.nachman.dev).
 
 It provides a declarative API for drawing shapes with capabilities for introducing **controlled randonness**.
 
